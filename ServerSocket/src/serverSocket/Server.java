@@ -25,12 +25,15 @@ public class Server {
             Socket clientSocket = serverSocket.accept();
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            String greeting = in.readLine();
-            if ("hello server".equals(greeting)) {
-                out.println("hello client");
-            } else {
-                out.println("unrecognised greeting");
-            }
+            boolean fine = false;
+            String messaggio;
+            while (!fine) {
+                messaggio = in.readLine();
+                if (messaggio.equals("fine")) {
+                    fine = true;
+                }
+                out.println(messaggio.toUpperCase());
+            }            
             in.close();
             out.close();
             clientSocket.close();
